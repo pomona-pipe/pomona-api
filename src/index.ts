@@ -6,7 +6,7 @@ import videos from './routes/prismic/videos'
 
 // create express server
 const app = express()
-const port = 8080; // default port to listen
+const port = Number(process.env.PORT || 8080);
 
 // add routes
 app.use(images, pdfs, docs, videos)
@@ -14,6 +14,3 @@ app.use(images, pdfs, docs, videos)
 app.listen( port, () => {
     console.log( `server started at http://localhost:${ port }` );
 } );
-
-// Export express app
-export default app

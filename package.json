@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "Express app for integrating Dropbox, AWS S3 and Prismic",
   "scripts": {
+    "start:dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts",
+    "exec": "ts-node -r tsconfig-paths/register ./src"
   },
   "dependencies": {
     "aws-sdk": "^2.762.0",
@@ -16,6 +24,10 @@
   "devDependencies": {
     "@types/crypto-js": "^4.0.1",
     "@types/express": "^4.17.8",
-    "@types/isomorphic-fetch": "0.0.35"
+    "@types/isomorphic-fetch": "0.0.35",
+    "@types/node": "^14.11.8",
+    "nodemon": "^2.0.5",
+    "ts-node": "^9.0.0",
+    "tsconfig-paths": "^3.9.0"
   }
 }
