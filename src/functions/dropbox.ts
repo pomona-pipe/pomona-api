@@ -16,14 +16,18 @@ export async function listDropboxFiles(fileTypes?: FileType[]){
   // retrieve initial results
   const listFolderResult = await dropbox.filesListFolder(listFolderArg)
   const entries = listFolderResult.entries as DropboxTypes.files.FileMetadataReference[]
-  const { cursor, has_more } = listFolderResult
+  let { cursor, has_more } = listFolderResult
+  
+  
   // retrieve remaining results
-  if (has_more) {
+  while (has_more) {
     const remainingListFolderResult = await dropbox.filesListFolderContinue({
       cursor
     })
     const remainingEntries = remainingListFolderResult.entries as DropboxTypes.files.FileMetadataReference[]
     entries.push(...remainingEntries)
+    has_more = remainingListFolderResult.has_more
+    cursor = remainingListFolderResult.cursor
   }
   // filter just files
   let fileResults = entries.filter((entry) => entry['.tag'] === 'file')
