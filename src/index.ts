@@ -1,4 +1,5 @@
 import express from 'express'
+import dotenv from 'dotenv'
 import updateS3FromDropbox from './routes/s3UpdateFromDropbox'
 import images from './routes/prismic/images'
 import pdfs from './routes/prismic/pdfs'
@@ -7,6 +8,9 @@ import videos from './routes/prismic/videos'
 import sendToAlgolia from './routes/prismic/send-to-algolia'
 import slackChannelPost from './routes/forms/slackChannelPost'
 import sendEmail from './routes/forms/sendEmail'
+
+// inject env variables
+dotenv.config()
 
 // create express server
 const app = express()
