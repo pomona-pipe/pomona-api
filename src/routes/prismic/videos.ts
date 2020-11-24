@@ -2,7 +2,6 @@
 import { Router } from 'express'
 import { getServerUrl } from '../../tools'
 import { createPrismicResults } from '../../functions/prismic'
-import { updateS3FromDropbox } from '../../functions'
 import { FileType } from '../../../types'
 
 // create route and export to api
@@ -17,9 +16,5 @@ router.use('/prismic/videos', async (req, res) => {
     page
   )
   res.send(results)
-  // TODO: replace with dropbox webhook
-  res.on('finish', () => {
-    updateS3FromDropbox()
-  })
 })
 export default router
