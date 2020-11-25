@@ -1,5 +1,9 @@
 import { Request } from 'express'
 import { FileInfo, FileType } from '../types'
+import dotenv from 'dotenv'
+
+// inject env variables
+dotenv.config()
 
 export function getServerUrl(request: Request) {
   const serverUrl =

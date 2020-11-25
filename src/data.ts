@@ -1,5 +1,9 @@
 import { Dropbox } from 'dropbox/dist/Dropbox-sdk.min'
 import fetch from 'isomorphic-fetch'
+import dotenv from 'dotenv'
+
+// inject env variables
+dotenv.config()
 
 // aws
 export const cloudfrontUrl = 'https://d113q3lewv5kc2.cloudfront.net'
