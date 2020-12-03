@@ -14,6 +14,7 @@
     "exec": "ts-node -r tsconfig-paths/register ./src"
   },
   "dependencies": {
+    "@types/redis": "^2.8.28",
     "algoliasearch": "^4.8.0",
     "aws-sdk": "^2.762.0",
     "axios": "^0.21.0",
@@ -23,6 +24,7 @@
     "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.20",
+    "redis": "^3.0.2",
     "typescript": "^4.0.3"
   },
   "devDependencies": {
