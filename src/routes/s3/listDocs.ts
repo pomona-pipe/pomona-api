@@ -1,17 +1,17 @@
 /* eslint-disable camelcase */
 import { Router } from 'express'
+import { Prefix } from 'aws-sdk/clients/s3'
 import { getServerUrl } from '../../tools'
 import { createPrismicResults } from '../../functions/prismic'
-import { FileType } from '../../../types'
 
 // create route and export to api
 const router = Router()
 router.use('/s3/list-docs', async (req, res) => {
-  const fileTypes: FileType[] = ['PDF', 'Word Document']
+  const filePrefix: Prefix = 'docs'
   const page = Number(req.query.page)
   const serverUrl = getServerUrl(req)
   const results = await createPrismicResults(
-    fileTypes,
+    filePrefix,
     serverUrl,
     page
   )

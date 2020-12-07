@@ -1,37 +1,40 @@
-import S3, { ObjectIdentifierList } from 'aws-sdk/clients/s3'
-import { AWSFileUpload } from '../../types'
+import S3, { ObjectIdentifierList, Prefix } from "aws-sdk/clients/s3";
+import { AWSFileUpload } from "../../types";
+
+const Bucket = "pomona-dropbox";
 
 function createS3(Prefix?: string) {
   return new S3({
-    endpoint: 's3.us-east-1.amazonaws.com',
+    endpoint: "s3.us-east-1.amazonaws.com",
     params: {
-      Bucket: 'pomona-dropbox',
-      Prefix
-    }
-  })
+      Bucket,
+      Prefix,
+    },
+  });
 }
 
 export async function s3DeleteFiles(filePaths: string[]) {
-  const s3 = createS3()
+  const s3 = createS3();
   const deleteObjects: ObjectIdentifierList = filePaths.map((path) => ({
-    Key: path
-  }))
+    Key: path,
+  }));
   const deleteResponse = s3
     .deleteObjects({
       Bucket: s3.config.params!.Bucket,
       Delete: {
-        Objects: deleteObjects
-      }
+        Objects: deleteObjects,
+      },
     })
     .promise()
-    .then((data) => data.Deleted)
-  return deleteResponse
+    .then((data) => data.Deleted);
+  return deleteResponse;
 }
 
-export async function s3ListFiles() {
-  const s3 = createS3()
+// TODO: allow for more than 1000 files by passing a continuation token
+export async function s3ListFiles(Prefix?: Prefix) {
+  const s3 = createS3();
   const filesResponse = s3
-    .listObjectsV2()
+    .listObjectsV2({ Bucket, Prefix })
     .promise()
     .then((data) => data.Contents!.filter((item) => {
       const isFile = !item.Key!.endsWith('/')
@@ -41,19 +44,19 @@ export async function s3ListFiles() {
 }
 
 export async function s3UploadFile(fileUpload: AWSFileUpload) {
-  const { uploadPath, fileBuffer, contentType } = fileUpload
-  const s3 = createS3()
+  const { uploadPath, fileBuffer, contentType } = fileUpload;
+  const s3 = createS3();
   const uploadParams = {
     Bucket: s3.config.params!.Bucket,
     Key: uploadPath,
     Body: fileBuffer,
-    ContentType: contentType
-  }
+    ContentType: contentType,
+  };
   const uploadResponse = s3
     .upload(uploadParams)
     .promise()
     .then((data) => {
-      return data
-    })
-  return uploadResponse
+      return data;
+    });
+  return uploadResponse;
 }

@@ -1,46 +1,38 @@
+import { Prefix, ObjectList as S3ObjectList } from 'aws-sdk/clients/s3'
 import { SHA256, enc } from 'crypto-js'
 import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi'
 import { prismicMaxPerPage, cloudfrontUrl } from '../data'
-import { getFileInfo, getSanitizedFileName, getFileThumbnail } from '../tools'
-import { listDropboxFiles } from './dropbox'
-import { FileType, IPrismicResult } from '../../types'
+import { getFileInfo, getFileThumbnail } from '../tools'
+import { s3ListFiles } from './aws'
+import { IPrismicResult } from '../../types'
 
 export async function createPrismicResults(
-  fileTypes: FileType[],
+  filePrefix: Prefix,
   serverUrl: string,
   page?: number
 ) {
-  const results = (await listDropboxFiles(fileTypes)).map((file) => {
-    const fileExtensionLower = file.name
-      .substr(file.name.lastIndexOf('.') + 1)
-      .toLowerCase()
-    file.name = `${file.name.substr(
-      0,
-      file.name.lastIndexOf('.')
-    )}.${fileExtensionLower}`
-    return file
-  })
+  const results = await s3ListFiles(filePrefix)
   const paginatedResults = page
     ? paginateFiles(results, page, prismicMaxPerPage)
     : results
   const prismicResults: IPrismicResult[] = []
   for (const file of paginatedResults) {
-    const { id, client_modified, name } = file
-    const fileInfo = getFileInfo(name)
-    const { type, s3UploadFolder } = fileInfo
-    const s3Path = `${s3UploadFolder}/${getSanitizedFileName(name)}`
-    const fileUrl = `${cloudfrontUrl}/${s3Path}`
-    const wordArray = SHA256(id)
+    const { LastModified, Key } = file
+    const fileName = Key!.split('/')[1]
+    const fileInfo = getFileInfo(fileName)
+    const { type } = fileInfo
+    const fileUrl = `${cloudfrontUrl}/${fileName}`
+    const wordArray = SHA256(fileName)
     const hashedId = wordArray.toString(enc.Base64)
 
     const thumbnail = getFileThumbnail(fileUrl, type, serverUrl)
     prismicResults.push({
       id: hashedId,
-      title: name,
+      title: fileName,
       description: type,
       image_url: thumbnail,
-      last_update: Number(new Date(client_modified)),
-      blob: { fileUrl, fileName: name, thumbnail }
+      last_update: Number(LastModified!),
+      blob: { fileUrl, fileName, thumbnail }
     })
   }
 
@@ -51,7 +43,7 @@ export async function createPrismicResults(
 }
 
 function paginateFiles(
-  files: DropboxTypes.files.FileMetadataReference[],
+  files: S3ObjectList,
   page: number,
   resultsLimit: number
 ) {
