@@ -6,8 +6,8 @@ import { FileType } from '../../../types'
 
 // create route and export to api
 const router = Router()
-router.use('/prismic/pdfs', async (req, res) => {
-  const fileTypes: FileType[] = ['PDF']
+router.use('/s3/list-videos', async (req, res) => {
+  const fileTypes: FileType[] = ['Video']
   const page = Number(req.query.page)
   const serverUrl = getServerUrl(req)
   const results = await createPrismicResults(

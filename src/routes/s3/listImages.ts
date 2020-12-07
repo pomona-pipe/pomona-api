@@ -6,7 +6,7 @@ import { FileType } from '../../../types'
 
 // create route and export to api
 const router = Router()
-router.use('/prismic/images', async (req, res) => {
+router.use('/s3/list-images', async (req, res) => {
   const fileTypes: FileType[] = ['Image']
   const page = Number(req.query.page)
   const serverUrl = getServerUrl(req)

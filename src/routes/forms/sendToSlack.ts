@@ -5,7 +5,7 @@ import { camelCaseToTitle } from '../../tools'
 
 // create route and export to api
 const router = Router()
-router.use('/forms/slack-channel-post', async (req, res) => {
+router.use('/forms/send-to-slack', async (req, res) => {
   // post to Slack Channel: contact-form
   const { formData, webhook } = req.body
   const data = (() => {

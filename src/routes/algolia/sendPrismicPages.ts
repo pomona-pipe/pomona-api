@@ -9,7 +9,7 @@ import { snakeCaseToTitle } from '../../tools'
 
 // create route and export to api
 const router = Router()
-router.use('/prismic/send-to-algolia', async (req, res) => {
+router.use('/algolia/send-prismic-pages', async (req, res) => {
   // fetch prismic documents
   // TODO: add prismic api token and options arg
   const prismicClient = await Prismic.getApi(
