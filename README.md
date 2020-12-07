@@ -2,8 +2,12 @@
 
 Express app for external service integrations with the Pomona Website
 
-1. Files: Dropbox => S3 => Prismic
-2. Search: Prismic => Algolia
+1. Amazon S3:
+    * List files by type
+    * Sync from Dropbox
+
+2. Algolia: Index Prismic pages
+
 3. Forms:
-    a) Web => Slack
-    b) Web => AWS SES
+    * Slack Channel Notificatio
+    * Send Email via Amazon SES
