@@ -1,16 +1,14 @@
-import { Request } from 'express'
 import { FileInfo, FileType } from '../types'
-import dotenv from 'dotenv'
 
-// inject env variables
-dotenv.config()
-
-export function getServerUrl(request: Request) {
-  const serverUrl =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000'
-      : `https://${request.hostname}`
-  return serverUrl
+export function paginate(
+  files: any[],
+  page: number,
+  resultsLimit: number
+) {
+  const start = page * resultsLimit - resultsLimit
+  const end = start + resultsLimit
+  const pageResults = files.slice(start, end)
+  return pageResults
 }
 
 export function getSanitizedFileName(fileName: string) {

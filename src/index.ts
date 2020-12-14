@@ -1,10 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import updateS3FromDropbox from './routes/s3/syncFromDropbox'
-import images from './routes/s3/listImages'
-import pdfs from './routes/s3/listPdfs'
-import docs from './routes/s3/listDocs'
-import videos from './routes/s3/listVideos'
+import saveFilesByType from './routes/redis/saveFilesByType'
+import getFilesByType from './routes/prismic/getFilesByType'
 import sendToAlgolia from './routes/algolia/sendPrismicPages'
 import slackChannelPost from './routes/forms/sendToSlack'
 import sendEmail from './routes/forms/sendEmail'
@@ -27,10 +25,8 @@ app.use(express.json())
 // add routes
 app.use(
   updateS3FromDropbox,
-  images,
-  pdfs,
-  docs,
-  videos,
+  saveFilesByType,
+  getFilesByType,
   sendToAlgolia,
   slackChannelPost,
   sendEmail

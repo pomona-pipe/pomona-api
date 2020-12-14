@@ -1,22 +1,19 @@
-import { Prefix, ObjectList as S3ObjectList } from 'aws-sdk/clients/s3'
 import { SHA256, enc } from 'crypto-js'
 import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi'
-import { prismicMaxPerPage, cloudfrontUrl } from '../data'
-import { getFileInfo, getFileThumbnail } from '../tools'
+import { S3UploadFolder, IPrismicResult } from '../../types'
+import { prismicMaxPerPage, cloudfrontUrl, frontendServerUrl } from '../data'
+import { getFileInfo, getFileThumbnail, paginate } from '../tools'
+import { setCacheValue, getCacheValue } from '../functions/redis'
 import { s3ListFiles } from './aws'
-import { IPrismicResult } from '../../types'
+import { result } from 'lodash'
 
-export async function createPrismicResults(
-  filePrefix: Prefix,
-  serverUrl: string,
-  page?: number
-) {
+export async function savePrismicResults(filePrefix: S3UploadFolder) {
   const results = await s3ListFiles(filePrefix)
-  const paginatedResults = page
-    ? paginateFiles(results, page, prismicMaxPerPage)
-    : results
+  if(results.length === 0) {
+    return results.length
+  }
   const prismicResults: IPrismicResult[] = []
-  for (const file of paginatedResults) {
+  for (const file of results) {
     const { LastModified, Key } = file
     const fileName = Key!.split('/')[1]
     const fileInfo = getFileInfo(fileName)
@@ -25,7 +22,7 @@ export async function createPrismicResults(
     const wordArray = SHA256(fileName)
     const hashedId = wordArray.toString(enc.Base64)
 
-    const thumbnail = getFileThumbnail(fileUrl, type, serverUrl)
+    const thumbnail = getFileThumbnail(fileUrl, type, frontendServerUrl)
     prismicResults.push({
       id: hashedId,
       title: fileName,
@@ -35,22 +32,23 @@ export async function createPrismicResults(
       blob: { fileUrl, fileName, thumbnail }
     })
   }
-
-  return {
-    results_size: results.length,
-    results: prismicResults
-  }
+  return setCacheValue(filePrefix, prismicResults)
+    .then(() => results.length)
+    .catch((err => err))
 }
 
-function paginateFiles(
-  files: S3ObjectList,
-  page: number,
-  resultsLimit: number
+export async function fetchPrismicResults(
+  filePrefix: S3UploadFolder,
+  page?: number
 ) {
-  const start = page * resultsLimit - resultsLimit
-  const end = start + resultsLimit
-  const pageResults = files.slice(start, end)
-  return pageResults
+  let prismicFiles: IPrismicResult[] = await getCacheValue(filePrefix)
+  if(page) {
+    prismicFiles = paginate(prismicFiles, page, prismicMaxPerPage)
+  }
+  return {
+    results_size: prismicFiles.length,
+    results: prismicFiles
+  }
 }
 
 export async function getPrismicDocuments(

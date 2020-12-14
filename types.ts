@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 interface IPrismicBlob {
-  fileUrl: string
-  fileName: string
-  thumbnail: string
+  fileUrl: string;
+  fileName: string;
+  thumbnail: string;
 }
 
 export interface IPrismicResult {
@@ -46,10 +46,19 @@ export type ContentType =
   | "text/csv"
   | "text";
 
+export type S3UploadFolder =
+  | "images"
+  | "videos"
+  | "pdfs"
+  | "docs"
+  | "spreadsheets"
+  | "powerpoints"
+  | "other-files";
+
 export interface FileInfo {
   type: FileType;
   contentType: ContentType;
-  s3UploadFolder: string;
+  s3UploadFolder: S3UploadFolder;
 }
 
 export interface AWSFileUpload {
