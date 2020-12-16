@@ -38,7 +38,8 @@ export async function s3ListFiles(Prefix?: Prefix) {
     .promise()
     .then((data) => data.Contents!.filter((item) => {
       const isFile = !item.Key!.endsWith('/')
-      return isFile
+      const isThumbnail = item.Key!.includes('@')
+      return isFile && !isThumbnail
     }))
   return filesResponse
 }
