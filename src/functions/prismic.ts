@@ -40,13 +40,13 @@ export async function fetchPrismicResults(
   filePrefix: S3UploadFolder,
   page?: number
 ) {
-  let prismicFiles: IPrismicResult[] = await getCacheValue(filePrefix)
-  if(page) {
-    prismicFiles = paginate(prismicFiles, page, prismicMaxPerPage)
-  }
+  const prismicFiles: IPrismicResult[] = await getCacheValue(filePrefix)
+  const paginatedResults = page
+    ? paginate(prismicFiles, page, prismicMaxPerPage)
+    : prismicFiles
   return {
     results_size: prismicFiles.length,
-    results: prismicFiles
+    results: paginatedResults
   }
 }
 
