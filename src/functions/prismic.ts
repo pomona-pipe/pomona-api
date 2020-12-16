@@ -5,7 +5,6 @@ import { prismicMaxPerPage, cloudfrontUrl, frontendServerUrl } from '../data'
 import { getFileInfo, getFileThumbnail, paginate } from '../tools'
 import { setCacheValue, getCacheValue } from '../functions/redis'
 import { s3ListFiles } from './aws'
-import { result } from 'lodash'
 
 export async function savePrismicResults(filePrefix: S3UploadFolder) {
   const results = await s3ListFiles(filePrefix)
@@ -18,7 +17,7 @@ export async function savePrismicResults(filePrefix: S3UploadFolder) {
     const fileName = Key!.split('/')[1]
     const fileInfo = getFileInfo(fileName)
     const { type } = fileInfo
-    const fileUrl = `${cloudfrontUrl}/${fileName}`
+    const fileUrl = `${cloudfrontUrl}/${filePrefix}/${fileName}`
     const wordArray = SHA256(fileName)
     const hashedId = wordArray.toString(enc.Base64)
 
