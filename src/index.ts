@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import index from './routes'
 import updateS3FromDropbox from './routes/s3/syncFromDropbox'
 import saveFilesByType from './routes/redis/saveFilesByType'
 import getFilesByType from './routes/prismic/getFilesByType'
@@ -24,6 +25,7 @@ app.use(express.json())
 
 // add routes
 app.use(
+  index,
   updateS3FromDropbox,
   saveFilesByType,
   getFilesByType,
