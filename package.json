@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Express app for integrating Dropbox, AWS S3 and Prismic",
   "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node ./dist",
     "start:dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +17,6 @@
     "exec": "ts-node -r tsconfig-paths/register ./src"
   },
   "dependencies": {
-    "@types/redis": "^2.8.28",
     "algoliasearch": "^4.8.0",
     "aws-sdk": "^2.762.0",
     "axios": "^0.21.0",
@@ -24,8 +26,7 @@
     "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.20",
-    "redis": "^3.0.2",
-    "typescript": "^4.0.3"
+    "redis": "^3.0.2"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.0.1",
@@ -33,9 +34,11 @@
     "@types/isomorphic-fetch": "0.0.35",
     "@types/lodash": "^4.14.165",
     "@types/node": "^14.11.8",
+    "@types/redis": "^2.8.28",
     "nodemon": "^2.0.5",
     "prismic-javascript": "^2.7.1",
     "ts-node": "^9.0.0",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.1.3"
   }
 }

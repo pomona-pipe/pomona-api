@@ -1,4 +1,4 @@
-import { FileInfo, FileType } from '../types'
+import { FileInfo, FileType } from './types'
 
 export function paginate(
   files: any[],

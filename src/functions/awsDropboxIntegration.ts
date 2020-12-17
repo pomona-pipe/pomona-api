@@ -4,7 +4,7 @@ import { s3ListFiles, s3UploadFile, s3DeleteFiles } from './aws'
 import { dropbox } from '../data'
 import { getFileInfo, getSanitizedFileName } from '../tools'
 import { listDropboxFiles } from './dropbox'
-import { ContentType } from '../../types'
+import { ContentType } from '../types'
 
 interface S3Upload {
   uploadPath: string

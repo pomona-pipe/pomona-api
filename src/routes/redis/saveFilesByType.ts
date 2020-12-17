@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { Router } from 'express'
-import { S3UploadFolder } from '../../../types'
+import { S3UploadFolder } from '../../types'
 import { savePrismicResults } from '../../functions/prismic'
 
 // TODO: convert to cron job using node-cron

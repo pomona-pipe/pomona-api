@@ -1,6 +1,6 @@
 import { dropbox, dropboxRoot } from '../data'
 import { getFileInfo } from '../tools'
-import { FileType } from '../../types'
+import { FileType } from '../types'
 
 export async function listDropboxFiles(fileTypes?: FileType[]){
   // structure ListFolder Arg

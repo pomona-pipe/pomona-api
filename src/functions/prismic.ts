@@ -1,6 +1,6 @@
 import { SHA256, enc } from 'crypto-js'
 import ResolvedApi from 'prismic-javascript/d.ts/ResolvedApi'
-import { S3UploadFolder, IPrismicResult } from '../../types'
+import { S3UploadFolder, IPrismicResult } from '../types'
 import { prismicMaxPerPage, cloudfrontUrl, frontendServerUrl } from '../data'
 import { getFileInfo, getFileThumbnail, paginate } from '../tools'
 import { setCacheValue, getCacheValue } from '../functions/redis'

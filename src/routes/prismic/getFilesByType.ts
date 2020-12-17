@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { Router } from 'express'
-import { S3UploadFolder } from '../../../types'
+import { S3UploadFolder } from '../../types'
 import { fetchPrismicResults } from '../../functions/prismic'
 
 // TODO: allow multiple file types

@@ -12,6 +12,11 @@ Desktop.ini
 .directory
 *~
 
+# IDE
+/src/*.js
+
+# build
+/dist
 
 # npm
 node_modules

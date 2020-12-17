@@ -1,5 +1,5 @@
 import S3, { ObjectIdentifierList, Prefix } from "aws-sdk/clients/s3";
-import { AWSFileUpload } from "../../types";
+import { AWSFileUpload } from "../types";
 
 const Bucket = "pomona-dropbox";
 
