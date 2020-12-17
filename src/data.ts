@@ -11,7 +11,8 @@ export const frontendServerUrl = process.env.FRONTEND_SERVER_URL!
 
 // redis
 const redisPort = process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379
-export const redisClient = createClient(redisPort)
+const redisHost = process.env.NODE_ENV === 'development' ? '127.0.0.1' : 'pomona-cluster-redis.s6dk68.0001.use1.cache.amazonaws.com'
+export const redisClient = createClient(redisPort, redisHost)
 export const redisCacheTime = 3600
 
 // aws
