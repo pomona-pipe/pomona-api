@@ -5,10 +5,7 @@ phases:
       - npm install
   build:
     commands:
-      - tsc
-  start:
-    commands:
-      - node ./dist
+      - tsc && node ./dist
 artifacts:
   files:
     - '**/*'
