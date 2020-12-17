@@ -2,13 +2,13 @@ version: 0.0
 phases:
   pre_build:
     commands:
-    - npm install
+      - npm install
   build:
     commands:
-    - tsc
+      - tsc
   start:
     commands:
-    - node ./dist
+      - node ./dist
 artifacts:
   files:
-  - '**/*'
+    - '**/*'
