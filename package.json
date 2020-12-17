@@ -9,13 +9,6 @@
     "start:dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "nodemonConfig": {
-    "watch": [
-      "src"
-    ],
-    "ext": "ts",
-    "exec": "ts-node -r tsconfig-paths/register ./src"
-  },
   "dependencies": {
     "algoliasearch": "^4.8.0",
     "aws-sdk": "^2.762.0",
