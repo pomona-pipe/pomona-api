@@ -25,13 +25,13 @@ app.use(express.json())
 
 // add routes
 app.use(
-  index,
   updateS3FromDropbox,
   saveFilesByType,
   getFilesByType,
   sendToAlgolia,
   slackChannelPost,
-  sendEmail
+  sendEmail,
+  index
 )
 
 app.listen( port, () => {
