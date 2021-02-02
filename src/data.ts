@@ -10,8 +10,8 @@ dotenv.config()
 export const frontendServerUrl = process.env.FRONTEND_SERVER_URL!
 
 // redis
-const redisPort = process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379
-const redisHost = process.env.NODE_ENV === 'development' ? '127.0.0.1' : 'pomona-cluster-redis.s6dk68.0001.use1.cache.amazonaws.com'
+const redisPort = process.env.AWS_REDIS_PORT ? parseInt(process.env.AWS_REDIS_PORT) : 6379
+const redisHost = process.env.AWS_REDIS_HOST || '127.0.0.1'
 export const redisClient = createClient(redisPort, redisHost)
 export const redisCacheTime = 3600
 
