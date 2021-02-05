@@ -29,7 +29,7 @@ router.use('/forms/send-email', async (req, res) => {
   // create sendEmail params
   const params = {
     Destination: {
-      ToAddresses: CONTACT_FORM_EMAIL_RECEPIENTS!.split(/,\s*/)
+      ToAddresses: CONTACT_FORM_EMAIL_RECEPIENTS!.split(/\s*/)
     },
     Message: {
       Body: {
