@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "description": "Express app for integrating Dropbox, AWS S3 and Prismic",
   "scripts": {
-    "prebuild": " npm i -g typescript && npm i",
     "build": "tsc",
-    "prestart": "npm run build",
-    "start": "node ./dist",
+    "start": "node dist/index.js",
     "start:dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

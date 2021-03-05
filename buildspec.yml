@@ -5,11 +5,14 @@ phases:
       nodejs: 12
   pre_build:
     commands:
-      - npm install -g typescript
-      - npm install
+      - npm i -g typescript
+      - npm i
   build:
     commands:
-      - tsc && node ./dist
+      - tsc
 artifacts:
   files:
-    - '**/*'
+    - 'dist/*.js'
+    - 'dist/**/*.js'
+    - 'package.json'
+    - 'node_modules/**/*'
