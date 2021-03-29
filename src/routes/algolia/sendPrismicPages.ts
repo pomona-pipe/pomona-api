@@ -7,6 +7,7 @@ import { Document } from 'prismic-javascript/d.ts/documents'
 import { getPrismicDocuments } from '../../functions/prismic'
 import { snakeCaseToTitle } from '../../tools'
 
+// TODO: convert to cron job using node-cron
 // create route and export to api
 const router = Router()
 router.use('/algolia/send-prismic-pages', async (req, res) => {
