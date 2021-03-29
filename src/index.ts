@@ -2,7 +2,9 @@ import express from 'express'
 import dotenv from 'dotenv'
 import index from './routes'
 import updateS3FromDropbox from './routes/s3/syncFromDropbox'
-import saveFilesByType from './routes/redis/savePdfs'
+import saveImages from './routes/redis/images'
+import savePdfs from './routes/redis/pdfs'
+import saveVideos from './routes/redis/pdfs'
 import getImages from './routes/prismic/images'
 import getPdfs from './routes/prismic/pdfs'
 import getVideos from './routes/prismic/videos'
@@ -28,7 +30,9 @@ app.use(express.json())
 // add routes
 app.use(
   updateS3FromDropbox,
-  saveFilesByType,
+  saveImages,
+  savePdfs,
+  saveVideos,
   getImages,
   getPdfs,
   getVideos,
