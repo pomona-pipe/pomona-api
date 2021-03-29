@@ -2,8 +2,10 @@ import express from 'express'
 import dotenv from 'dotenv'
 import index from './routes'
 import updateS3FromDropbox from './routes/s3/syncFromDropbox'
-import saveFilesByType from './routes/redis/saveFilesByType'
-import getFilesByType from './routes/prismic/getFilesByType'
+import saveFilesByType from './routes/redis/savePdfs'
+import getImages from './routes/prismic/images'
+import getPdfs from './routes/prismic/pdfs'
+import getVideos from './routes/prismic/videos'
 import sendToAlgolia from './routes/algolia/sendPrismicPages'
 import slackChannelPost from './routes/forms/sendToSlack'
 import sendEmail from './routes/forms/sendEmail'
@@ -27,13 +29,16 @@ app.use(express.json())
 app.use(
   updateS3FromDropbox,
   saveFilesByType,
-  getFilesByType,
+  getImages,
+  getPdfs,
+  getVideos,
   sendToAlgolia,
   slackChannelPost,
   sendEmail,
   index
 )
 
+// start server
 app.listen( port, () => {
-    console.log( `server started at http://localhost:${ port }` );
+    console.log( `Server started on port ${ port }` );
 } );
